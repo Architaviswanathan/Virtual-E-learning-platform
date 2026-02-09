@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Scores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #fb873f;
+            color: white;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        td[colspan="4"] {
+            text-align: center;
+        }
+        .view-details {
+            cursor: pointer;
+            color: #fb873f;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Scores</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Student Code</th>
+                    <th>Score</th>
+                    <th>Total</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="scoreTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let allResults = JSON.parse(localStorage.getItem('allStudentResults')) || [];
+
+        function displayScores() {
+            let tableBody = document.getElementById('scoreTable');
+            tableBody.innerHTML = ""; // Clear previous data
+
+            if (allResults.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='5'>No results available</td></tr>";
+                return;
+            }
+
+            allResults.forEach(result => {
+                let row = `<tr>
+                    <td>${result.name}</td>
+                    <td>${result.code}</td>
+                    <td>${result.score}</td>
+                    <td>${result.total}</td>
+                    <td><span class="view-details" onclick="viewStudentDetails('${result.code}')">View Details</span></td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function viewStudentDetails(studentCode) {
+            // Find the specific result by student code
+            let studentResult = allResults.find(result => result.code === studentCode);
+
+            if (studentResult) {
+                // Display detailed result (e.g., redirect to a new page or show in a modal)
+                alert(`
+                    Name: ${studentResult.name}
+                    Quiz Code: ${studentResult.code}
+                    Score: ${studentResult.score} out of ${studentResult.total}
+                `);
+            } else {
+                alert('Student not found.');
+            }
+        }
+
+        displayScores();
+    </script>
+    <script>
+        let allResults = JSON.parse(localStorage.getItem('allStudentResults')) || [];
+
+function displayScores() {
+    let tableBody = document.getElementById('scoreTable');
+    tableBody.innerHTML = ""; // Clear previous data
+
+    if (allResults.length === 0) {
+        tableBody.innerHTML = "<tr><td colspan='5'>No results available</td></tr>";
+        return;
+    }
+
+    allResults.forEach(result => {
+        let row = `<tr>
+            <td>${result.name}</td>
+            <td>${result.code}</td>
+            <td>${result.score}</td>
+            <td>${result.total}</td>
+            <td><span class="view-details" onclick="viewStudentDetails('${result.code}')">View Details</span></td>
+        </tr>`;
+        tableBody.innerHTML += row;
+    });
+}
+
+function viewStudentDetails(studentCode) {
+    // Find the specific result by student code
+    let studentResult = allResults.find(result => result.code === studentCode);
+
+    if (studentResult) {
+        // Display detailed result (e.g., redirect to a new page or show in a modal)
+        alert(`
+            Name: ${studentResult.name}
+            Quiz Code: ${studentResult.code}
+            Score: ${studentResult.score} out of ${studentResult.total}
+        `);
+    } else {
+        alert('Student not found.');
+    }
+}
+
+displayScores();
+
+    </script>
+</body>
+</html>

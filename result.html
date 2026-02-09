@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .result-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-container p {
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Result</h1>
+        <div class="result-container" id="result"></div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const result = JSON.parse(localStorage.getItem('studentResult'));
+            if (result) {
+                document.getElementById('result').innerHTML = `
+                    <p><strong>Name:</strong> ${result.name}</p>
+                    <p><strong>Quiz Code:</strong> ${result.code}</p>
+                    <p><strong>Score:</strong> ${result.score} out of ${result.total}</p>
+                    <p><strong>Correct Answers:</strong></p>
+                    <ul>
+                        ${Object.keys(result.correctAnswers).map((key) => 
+                            `<li>Question ${parseInt(key) + 1}: ${result.correctAnswers[key]}</li>`).join('')}
+                    </ul>
+                `;
+            } else {
+                document.getElementById('result').innerHTML = "<p>No result found.</p>";
+            }
+        }
+    </script>
+    <script>
+    <p><a href="viewscore.html">View all scores</p>
+    </script>
+</body>
+</html>
